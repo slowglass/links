@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold mb-2">Personal Hub</h1>
+            <p class="text-slate-400">Work & Home Quick Links</p>
+        </header>
+
+        <div id="link-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+    </div>
+
+    <script>
+        // --- DEFINE YOUR LINKS HERE ---
+        const links = [
+            { topic: "Work", name: "GitHub", url: "https://github.com", icon: "github" },
+            { topic: "Work", name: "Jira Dashboard", url: "https://atlassian.net", icon: "layout" },
+            { topic: "Work", name: "Slack", url: "https://slack.com", icon: "message-square" },
+            { topic: "Home", name: "YouTube", url: "https://youtube.com", icon: "play" },
+            { topic: "Home", name: "Personal Email", url: "https://gmail.com", icon: "mail" },
+            { topic: "Home", name: "Smart Home", url: "http://192.168.1.50", icon: "home" }
+        ];
+
+        function renderLinks() {
+            const container = document.getElementById('link-container');
+            
+            // Group links by Topic
+            const groups = links.reduce((acc, link) => {
+                if (!acc[link.topic]) acc[link.topic] = [];
+                acc[link.topic].push(link);
+                return acc;
+            }, {});
+
+            // Create HTML for each group
+            for (const [topic, items] of Object.entries(groups)) {
+                const section = document.createElement('div');
+                section.innerHTML = `
+                    <h2 class="text-xl font-semibold mb-4 text-blue-400 border-b border-slate-700 pb-2">${topic}</h2>
+                    <div class="space-y-3">
+                        ${items.map(item => `
+                            <a href="${item.url}" target="_blank" class="glass flex items-center p-4 rounded-xl hover:bg-slate-700 transition-all group">
+                                <i data-lucide="${item.icon}" class="mr-4 text-slate-400 group-hover:text-white"></i>
+                                <span class="font-medium text-slate-200 group-hover:text-white">${item.name}</span>
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            }
+            
+            // Initialize icons
+            lucide.createIcons();
+        }
+
+        renderLinks();
+    </script>
+</body>
+</html>
+
