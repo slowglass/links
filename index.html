@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .simple-icon {
+            width: 24px;
+            height: 24px;
+            background-color: currentColor;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            display: inline-block;
+        }
     </style>
 </head>
+
 <body class="min-h-screen p-8">
 
     <div class="max-w-4xl mx-auto">
@@ -24,27 +43,28 @@
 
     <script>
         // --- DEFINE YOUR LINKS HERE ---
+        // Using Simple Icons slugs (see https://simpleicons.org/)
         const links = [
             { topic: "Home", name: "Home Page", url: "https://homepage.gallifrey.org/", icon: "homepage" },
-            { topic: "Home", name: "Github", url: "https://github.com/slowglass?tab=repositories", icon: "git" },
-            { topic: "Home", name: "Personal Email", url: "https://gmail.com", icon: "mail" },
+            { topic: "Home", name: "Github", url: "https://github.com/slowglass?tab=repositories", icon: "github" },
+            { topic: "Home", name: "Personal Email", url: "https://gmail.com", icon: "gmail" },
 
             { topic: "Dungeons and Dragons", name: "Shard Collectors", url: "https://foundry-nbdsm.duckdns.org", icon: "redragon" },
-            { topic: "Dungeons and Dragons", name: "South of the River", url: "https://foundry-sotr.duckdns.org/", icon: "dragonframe" },
-            { topic: "Dungeons and Dragons", name: "Monk's Gate", url: "https://foundry-monk.duckdns.org", icon: "mail" },
+            { topic: "Dungeons and Dragons", name: "South of the River", url: "https://foundry-sotr.duckdns.org/", icon: "falcon" },
+            { topic: "Dungeons and Dragons", name: "Monk's Gate", url: "https://foundry-monk.duckdns.org", icon: "sidekiq" },
             { topic: "Dungeons and Dragons", name: "5e Tools", url: " https://tools-5e.duckdns.org", icon: "dungeonsanddragons" },
-           
+
             { topic: "Gemini", name: "VTT 13", url: "https://gemini.google.com/gem/1ngQpGQyjDxEffS60vBKl6Pbwe3N-tqvk?usp=sharing", icon: "foundryvirtualtabletop" },
             { topic: "Gemini", name: "VTT 12", url: "????", icon: "roll20" },
             { topic: "Gemini", name: "Wu Huan", url: "????", icon: "testinglibrary" },
             { topic: "Gemini", name: "Shard Collectors", url: "https://gemini.google.com/gem/1MwiUstUgiHa6tAuF77k73bw8ksuOys1i?usp=sharing", icon: "redragon" },
-            { topic: "Gemini", name: "South of the River", url: "https://gemini.google.com/gem/1d80ZUpUaX_tj6XK_PnRAFeLpoguUVgS-?usp=sharing", icon: "dragonframe" },
+            { topic: "Gemini", name: "South of the River", url: "https://gemini.google.com/gem/1d80ZUpUaX_tj6XK_PnRAFeLpoguUVgS-?usp=sharing", icon: "falcon" },
             { topic: "Gemini", name: "General", url: "https://gemini.google.com/app", icon: "googlegemini" }
         ];
 
         function renderLinks() {
             const container = document.getElementById('link-container');
-            
+
             // Group links by Topic
             const groups = links.reduce((acc, link) => {
                 if (!acc[link.topic]) acc[link.topic] = [];
@@ -60,7 +80,8 @@
                     <div class="space-y-3">
                         ${items.map(item => `
                             <a href="${item.url}" target="_blank" class="glass flex items-center p-4 rounded-xl hover:bg-slate-700 transition-all group">
-                                <i data-lucide="${item.icon}" class="mr-4 text-slate-400 group-hover:text-white"></i>
+                                <span class="simple-icon mr-4 text-slate-400 group-hover:text-white" 
+                                      style="mask-image: url('https://cdn.simpleicons.org/${item.icon}')"></span>
                                 <span class="font-medium text-slate-200 group-hover:text-white">${item.name}</span>
                             </a>
                         `).join('')}
@@ -68,13 +89,10 @@
                 `;
                 container.appendChild(section);
             }
-            
-            // Initialize icons
-            lucide.createIcons();
         }
 
         renderLinks();
     </script>
 </body>
-</html>
 
+</html>
